@@ -1,28 +1,31 @@
 const express = require("express");
 const router = express.Router();
 
+const noSql = require("../src/noSql.js");
+
 const database = require("../db/database.js");
-const config = require("../config/mongo_db.json");
 
 router.get("/", async (req, res) => {
 
-    const db = await database.getDb();
-    const resultSet = await db.collection.find({}).toArray();
-    await db.client.close();
+    const test = {name: "testmumin"};
+    const documents = await noSql.getAllDocuments();
 
     const data = {
         data: {
             msg: "GET Route/ index",
-            mongo: resultSet
+            mongo: documents
         }
     };
     res.status(200).json(data);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+
+    const docResult = await noSql.addDocument();
     const data = {
         data: {
-            msg: "POST Route/ hello index "
+            msg: "POST Route/ hello index ",
+            id : docResult
         }
     };
     res.status(201).json(data);
