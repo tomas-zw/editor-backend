@@ -1,7 +1,4 @@
 {
-    "localUrl": "mongodb://localhost:27017/",
-    "localDb": "mumin",
-    "prodUrl": "mongodb://localhost:27017/",
-    "prodDb": "mumin",
+    "localUrl": "mongodb://localhost:27017/mumin",
     "collection": "docs"
 }

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -9,10 +11,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 1337;
 
+app.use(cors());
+//app.options('*', cors());
+
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencodedapp.use(cors());
 
-app.use(cors());
 
 if (process.env.NODE_ENV !== "test") {
     app.use(morgan("combined"));
@@ -54,5 +58,5 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.listen(port, () => console.log(`listening on port ${port}!`));
+app.listen(port, () => console.log(`listening on port ${port}! ${process.env.NODE_ENV}`));
 

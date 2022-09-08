@@ -48,7 +48,7 @@ async function getAllDocuments(searchObject) {
             }
         });
     } finally {
-            await db.client.close();
+        await db.client.close();
     }
 
 }

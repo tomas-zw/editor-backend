@@ -7,8 +7,6 @@ const ObjectId = require('mongodb').ObjectId;
 
 router.get("/", async (req, res) => {
 
-    const test = {name: "new test mumin"};
-    //const documents = await noSql.getAllDocuments(test);
     const documents = await noSql.getAllDocuments();
 
     const data = {
