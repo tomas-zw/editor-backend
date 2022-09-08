@@ -3,36 +3,47 @@ const router = express.Router();
 
 const noSql = require("../src/noSql.js");
 
-const database = require("../db/database.js");
+const ObjectId = require('mongodb').ObjectId;
 
 router.get("/", async (req, res) => {
 
-    const test = {name: "testmumin"};
+    const test = {name: "new test mumin"};
+    //const documents = await noSql.getAllDocuments(test);
     const documents = await noSql.getAllDocuments();
 
     const data = {
         data: {
             msg: "GET Route/ index",
-            mongo: documents
+            collection: documents
         }
     };
     res.status(200).json(data);
 });
 
 router.post("/", async (req, res) => {
-
-    const docResult = await noSql.addDocument();
+    const newDoc = req.body;
+    const docResult = await noSql.addDocument(newDoc);
     const data = {
         data: {
             msg: "POST Route/ hello index ",
-            id : docResult
+            doc: docResult
         }
     };
     res.status(201).json(data);
 });
 
-router.put("/", (req, res) => {
-    res.status(204).send();
+router.put("/", async (req, res) => {
+    const docId = { _id: ObjectId(req.body._id)};
+    const setValue = { $set: { body: req.body.text, title: req.body.title } };
+    const docResult = await noSql.updateDocument(docId, setValue);
+    const data = {
+        data: {
+            msg: "PUT Route/ index",
+            doc: docResult
+        }
+    };
+    console.log(data)
+    res.status(204).json(data);
 });
 
 router.delete("/", (req, res) => {

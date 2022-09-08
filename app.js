@@ -2,9 +2,15 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const index = require("./routes/index");
+const resetDb = require("./routes/resetDb");
+
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = process.env.PORT || 1337;
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencodedapp.use(cors());
 
 app.use(cors());
 
@@ -15,6 +21,7 @@ if (process.env.NODE_ENV !== "test") {
 app.use(express.json());
 
 app.use("/", index);
+app.use("/resetdb", resetDb);
 
 app.get("/test/:msg", (req, res) => {
     const data = {

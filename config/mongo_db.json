@@ -3,5 +3,5 @@
     "localDb": "mumin",
     "prodUrl": "mongodb://localhost:27017/",
     "prodDb": "mumin",
-    "collection": "test"
+    "collection": "docs"
 }
