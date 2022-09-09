@@ -12,7 +12,7 @@ when file changes are detected. (nodemon)
 Very basic routing for now. 
 
 
-`GET`  : "https://jsramverk-editor-toza21.azurewebsites.net/
+`GET`  : "/"
 
 Return all documents.
 
@@ -37,7 +37,7 @@ data: {
 
 ```
 
-`POST`  : "https://jsramverk-editor-toza21.azurewebsites.net/
+`POST`  : "/"
 
 Add a document.
 
@@ -59,7 +59,7 @@ data: {
 
 ```
 
-`PUT`  : "https://jsramverk-editor-toza21.azurewebsites.net/
+`PUT`  : "/"
 
 Update a document.
 
