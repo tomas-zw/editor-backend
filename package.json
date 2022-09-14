@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "NODE_ENV='test' nodemon app.js",
     "start": "node app.js",
-    "production": "NODE_ENV='production' node app.js"
+    "production": "NODE_ENV='production' node app.js",
+    "lint": "eslint ."
   },
   "author": "toza21",
   "license": "ISC",
@@ -17,5 +18,10 @@
     "express": "^4.18.1",
     "mongodb": "^4.9.1",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-plugin-react": "^7.31.8",
+    "javascript-style-guide": "^1.0.1"
   }
 }
