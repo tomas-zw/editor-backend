@@ -4,7 +4,7 @@
   "description": "express backend",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --reporter=clover mocha 'test/**/*.js' --timeout 10000",
+    "test": "nyc --reporter=html --reporter=text --reporter=clover mocha 'test/**/*.js' --timeout 10000 --exit",
     "watch": "NODE_ENV='test' nodemon app.js",
     "start": "node app.js",
     "production": "NODE_ENV='production' node app.js",
