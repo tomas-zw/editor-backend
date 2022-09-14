@@ -3,10 +3,8 @@ const router = express.Router();
 
 const noSql = require("../src/noSql.js");
 
-const ObjectId = require('mongodb').ObjectId;
 
 router.delete("/", async (req, res) => {
-
     const result = await noSql.deleteAllDocs();
 
     const data = {
@@ -15,6 +13,7 @@ router.delete("/", async (req, res) => {
             collection: result
         }
     };
+
     res.status(200).json(data);
 });
 

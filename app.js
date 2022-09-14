@@ -15,7 +15,8 @@ app.use(cors());
 //app.options('*', cors());
 
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencodedapp.use(cors());
+// for parsing application/x-www-form-urlencodedapp.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 if (process.env.NODE_ENV !== "test") {
@@ -32,15 +33,17 @@ app.get("/test/:msg", (req, res) => {
         data: {
             msg: `GET/ hello json + ${req.params.msg}`
         }
-    }
+    };
+
     res.status(200).json(data);
 });
 
 app.use((req, res, next) => {
     var err = new Error(`${req.path} Not Found`);
+
     err.status = 404;
     next(err);
-})
+});
 
 app.use((err, req, res, next) => {
     if (res.headersSent) {
@@ -56,7 +59,7 @@ app.use((err, req, res, next) => {
             }
         ]
     });
-})
+});
 
 app.listen(port, () => console.log(`listening on port ${port}! ${process.env.NODE_ENV}`));
 

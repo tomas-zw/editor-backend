@@ -6,7 +6,6 @@ const noSql = require("../src/noSql.js");
 const ObjectId = require('mongodb').ObjectId;
 
 router.get("/", async (req, res) => {
-
     const documents = await noSql.getAllDocuments();
 
     const data = {
@@ -15,6 +14,7 @@ router.get("/", async (req, res) => {
             collection: documents
         }
     };
+
     res.status(200).json(data);
 });
 
@@ -27,6 +27,7 @@ router.post("/", async (req, res) => {
             doc: docResult
         }
     };
+
     res.status(201).json(data);
 });
 
@@ -40,7 +41,8 @@ router.put("/", async (req, res) => {
             doc: docResult
         }
     };
-    console.log(data)
+
+    console.log(data);
     res.status(204).json(data);
 });
 

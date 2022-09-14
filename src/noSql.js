@@ -10,6 +10,7 @@ module.exports = {
 
 async function deleteAllDocs() {
     let db;
+
     try {
         db = await mongo.getDb();
         const response = await db.collection.deleteMany({});
@@ -25,14 +26,14 @@ async function deleteAllDocs() {
             }
         });
     } finally {
-            await db.client.close();
+        await db.client.close();
     }
-
 }
 
 async function getAllDocuments(searchObject) {
     const search = searchObject || {};
     let db;
+
     try {
         db = await mongo.getDb();
         const resultset = await db.collection.find(search).toArray();
@@ -50,12 +51,12 @@ async function getAllDocuments(searchObject) {
     } finally {
         await db.client.close();
     }
-
 }
 
 async function getOneDocument(searchObject) {
     const search = searchObject || {};
     let db;
+
     try {
         db = await mongo.getDb();
         const resultset = await db.collection.findOne(search);
@@ -71,13 +72,13 @@ async function getOneDocument(searchObject) {
             }
         });
     } finally {
-            await db.client.close();
+        await db.client.close();
     }
-
 }
 
 async function updateDocument(docId, newValue) {
     let db;
+
     try {
         db = await mongo.getDb();
         const result = await db.collection.updateOne(docId, newValue);
@@ -93,14 +94,14 @@ async function updateDocument(docId, newValue) {
             }
         });
     } finally {
-            await db.client.close();
+        await db.client.close();
     }
-
 }
 
 async function addDocument(docObject) {
-    const newDoc = docObject || { author: "Tomas", title: "This is a very long title", body:"lite blandad text" };
+    const newDoc = docObject || { author: "Tomas", title: "This is a very long title", body: "lite blandad text" };
     let db;
+
     try {
         db = await mongo.getDb();
         const result = await db.collection.insertOne(newDoc);
@@ -116,6 +117,6 @@ async function addDocument(docObject) {
             }
         });
     } finally {
-            await db.client.close();
+        await db.client.close();
     }
 }
