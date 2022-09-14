@@ -18,7 +18,6 @@ describe('documents', () => {
                     res.body.should.be.an("object");
                     res.body.data.should.be.an("object");
                     res.body.data.collection.should.be.an("array");
-                    res.body.data.collection.length.should.be.above(0);
 
                     done();
                 });
