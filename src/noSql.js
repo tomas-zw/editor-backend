@@ -17,14 +17,14 @@ async function deleteAllDocs() {
 
         return response;
     } catch (e) {
-        return res.status(500).json({
+        return {
             errors: {
                 status: 500,
                 source: "/",
                 title: "Database error",
                 detail: e.message
             }
-        });
+        };
     } finally {
         await db.client.close();
     }
@@ -40,14 +40,14 @@ async function getAllDocuments(searchObject) {
 
         return resultset;
     } catch (e) {
-        return res.status(500).json({
+        return {
             errors: {
                 status: 500,
                 source: "/",
                 title: "Database error",
                 detail: e.message
             }
-        });
+        };
     } finally {
         await db.client.close();
     }
@@ -63,14 +63,14 @@ async function getOneDocument(searchObject) {
 
         return resultset;
     } catch (e) {
-        return res.status(500).json({
+        return {
             errors: {
                 status: 500,
                 source: "/",
                 title: "Database error",
                 detail: e.message
             }
-        });
+        };
     } finally {
         await db.client.close();
     }
@@ -85,14 +85,14 @@ async function updateDocument(docId, newValue) {
 
         return result;
     } catch (e) {
-        return res.status(500).json({
+        return {
             errors: {
                 status: 500,
                 source: "/",
                 title: "Database error",
                 detail: e.message
             }
-        });
+        };
     } finally {
         await db.client.close();
     }
@@ -108,14 +108,14 @@ async function addDocument(docObject) {
 
         return result;
     } catch (e) {
-        return res.status(500).json({
+        return {
             errors: {
                 status: 500,
                 source: "/",
                 title: "Database error",
                 detail: e.message
             }
-        });
+        };
     } finally {
         await db.client.close();
     }
