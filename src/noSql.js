@@ -99,7 +99,11 @@ async function updateDocument(docId, newValue) {
 }
 
 async function addDocument(docObject) {
-    const newDoc = docObject || { author: "Tomas", title: "This is a very long title", body: "lite blandad text" };
+    const newDoc = docObject || {
+        author: "Tomas",
+        title: "This is a very long title",
+        body: "lite blandad text"
+    };
     let db;
 
     try {
