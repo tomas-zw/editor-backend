@@ -14,14 +14,32 @@ const app = express();
 
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
 });
 
-io.sockets.on('connection', function(socket) {
-    console.log(`connected ${socket.id}`); // Nått lång och slumpat
+io.on('connection', function(socket) {
+    console.log(`connected ${socket.id}`);
+
+    socket.on("create", (room) => {
+        socket.join(room);
+        console.log("joined room");
+    });
+
+    socket.on("leave", (room) => {
+        socket.leave(room);
+        console.log("left room");
+    });
+
+    socket.on("update_document", (currentDoc) => {
+        socket.to(currentDoc._id).emit("update_document", currentDoc);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(`disconnected ${socket.id}`);
+    });
 });
 
 //----------------socket-------------------------

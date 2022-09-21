@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     const docId = { _id: ObjectId(req.body._id)};
-    const setValue = { $set: { body: req.body.text, title: req.body.title } };
+    const setValue = { $set: { body: req.body.body, title: req.body.title } };
     const docResult = await noSql.updateDocument(docId, setValue);
     const data = {
         data: {
@@ -42,7 +42,7 @@ router.put("/", async (req, res) => {
         }
     };
 
-    console.log(data);
+    //console.log(data);
     res.status(204).json(data);
 });
 
