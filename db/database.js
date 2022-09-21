@@ -16,7 +16,7 @@ const database = {
             useUnifiedTopology: true
         });
 
-        console.log(client);
+        //console.log(client);
         const db = await client.db();
         const collection = await db.collection(config.collection);
 
