@@ -9,6 +9,23 @@ const resetDb = require("./routes/resetDb");
 const bodyParser = require("body-parser");
 
 const app = express();
+
+//----------------socket-------------------------
+
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+io.sockets.on('connection', function(socket) {
+    console.log(`connected ${socket.id}`); // Nått lång och slumpat
+});
+
+//----------------socket-------------------------
+
 const port = process.env.PORT || 1337;
 
 app.use(cors());
@@ -61,6 +78,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-const server = app.listen(port, () => console.log(`listening on port ${port}!`));
+const server = httpServer.listen(port, () => console.log(`listening on port ${port}!`));
 
 module.exports = server;
