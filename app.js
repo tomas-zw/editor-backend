@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const index = require("./routes/index");
 const resetDb = require("./routes/resetDb");
+const auth = require(".routes/authUser");
 
 const bodyParser = require("body-parser");
 
