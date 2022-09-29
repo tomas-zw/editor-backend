@@ -1,11 +1,14 @@
 const mongo = require("../db/database.js");
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+
 const saltRounds = 10;
 
 module.exports = {
     "getUser": getUser,
     "addUser": addUser,
-    "login": login
+    "login": login,
+    "checkToken": checkToken
 };
 
 async function login(user, res) {
@@ -58,14 +61,14 @@ async function validatePassword(user, hash, res) {
             });
         }
         if (result) {
-            //const payload = { email: validate.email };
-
-            //const secret = process.env.JWT_SECRET;
-            //const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+            const payload = { email: user.email };
+            const secret = process.env.JWT_SECRET;
+            const token = jwt.sign(payload, secret, { expiresIn: '1h' });
 
             return res.status(201).json({
                 data: {
-                    email: user.email
+                    email: user.email,
+                    token: token,
                 }
             });
         }
@@ -154,3 +157,21 @@ async function addUser(newUser, res) {
         }
     });
 }
+
+function checkToken(req, res, next) {
+        const token = req.headers['x-access-token'];
+
+        jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
+            if (err) {
+                return res.status(401).json({
+                    errors: {
+                        status: 401,
+                        message: "Token is not valid."
+                    }
+                });
+            }
+
+            // Valid token send on the request
+            next();
+        });
+    }
