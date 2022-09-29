@@ -12,7 +12,7 @@ async function deleteAllDocs() {
     let db;
 
     try {
-        db = await mongo.getDb("users");
+        db = await mongo.getDb();
         const response = await db.collection.deleteMany({});
 
         return response;
@@ -114,7 +114,7 @@ async function addDocument(docObject) {
     try {
         //db = await mongo.getDb("user");
         db = await mongo.getDb();
-        const result = await db.collection.insertOne(newDoc);
+        const result = await db.collection.insertOne(docObject);
 
         return result;
     } catch (e) {

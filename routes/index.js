@@ -6,46 +6,55 @@ const auth = require("../src/auth.js");
 
 const ObjectId = require('mongodb').ObjectId;
 
-router.get("/", async (req, res) => {
-    const documents = await noSql.getAllDocuments();
+router.get(
+    "/",
+    (req, res, next) => auth.checkToken(req, res, next),
+    async (req, res) => {
+        const documents = await noSql.getAllDocuments();
 
-    const data = {
-        data: {
-            msg: "GET Route/ index",
-            collection: documents
-        }
-    };
+        const data = {
+            data: {
+                msg: "GET Route/ index",
+                collection: documents
+            }
+        };
 
-    res.status(200).json(data);
-});
+        res.status(200).json(data);
+    });
 
-router.post("/", async (req, res) => {
-    const newDoc = req.body;
-    const docResult = await noSql.addDocument(newDoc);
-    const data = {
-        data: {
-            msg: "POST Route/ hello index ",
-            doc: docResult
-        }
-    };
+router.post(
+    "/",
+    (req, res, next) => auth.checkToken(req, res, next),
+    async (req, res) => {
+        const newDoc = req.body;
+        const docResult = await noSql.addDocument(newDoc);
+        const data = {
+            data: {
+                msg: "POST Route/ hello index ",
+                doc: docResult
+            }
+        };
 
-    res.status(201).json(data);
-});
+        res.status(201).json(data);
+    });
 
-router.put("/", async (req, res) => {
-    const docId = { _id: ObjectId(req.body._id)};
-    const setValue = { $set: { body: req.body.body, title: req.body.title } };
-    const docResult = await noSql.updateDocument(docId, setValue);
-    const data = {
-        data: {
-            msg: "PUT Route/ index",
-            doc: docResult
-        }
-    };
+router.put(
+    "/",
+    (req, res, next) => auth.checkToken(req, res, next),
+    async (req, res) => {
+        const docId = { _id: ObjectId(req.body._id)};
+        const setValue = { $set: { body: req.body.body, title: req.body.title } };
+        const docResult = await noSql.updateDocument(docId, setValue);
+        const data = {
+            data: {
+                msg: "PUT Route/ index",
+                doc: docResult
+            }
+        };
 
-    //console.log(data);
-    res.status(204).json(data);
-});
+        //console.log(data);
+        res.status(204).json(data);
+    });
 
 router.delete("/", (req, res) => {
     res.status(204).send();
