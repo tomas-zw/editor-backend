@@ -1,4 +1,6 @@
 const mongo = require("../db/database.js");
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 module.exports = {
     "getUsers": getUsers,
@@ -35,6 +37,21 @@ async function addUser(newUser) {
         email: "any@mail.com",
         password: "aHashedValue",
     };
+
+    bcrypt.hash(newUser.password, saltRounds, function(err, hash) {
+        if (err) {
+            return {
+                errors: {
+                    status: 500,
+                    source: "/auth",
+                    title: "bcrypt error",
+                    detail: "failed to hash password"
+                }
+            }
+        };
+        user.password = hash;
+    });
+
     let db;
 
     try {
