@@ -4,7 +4,8 @@ const router = express.Router();
 const auth = require("../src/auth.js");
 
 router.get("/", async (req, res) => {
-    const users = await auth.getUsers();
+    const user = req.query.email;
+    const users = await auth.getUser(user);
 
     const data = {
         data: {
@@ -18,15 +19,12 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const newUser = req.body;
-    const userResult = await auth.addUser(newUser);
-    const data = {
-        data: {
-            msg: "POST Route/ hello index ",
-            doc: userResult
-        }
-    };
+    const _ = await auth.addUser(newUser, res);
+});
 
-    res.status(201).json(data);
+router.post("/login", async (req, res) => {
+    const newUser = req.body;
+    const _ = auth.login(newUser, res);
 });
 
 module.exports = router;

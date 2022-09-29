@@ -7,7 +7,7 @@ const database = {
         //eslint-disable-next-line max-len
         let dsn = `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@cluster0.wsvijsm.mongodb.net/?retryWrites=true&w=majority`;
 
-        const collection = getUsers ? config.users : config.collection
+        const collection = getUsers ? config.users : config.collection;
 
         if (process.env.NODE_ENV === 'test') {
             dsn = `${config.localUrl}`;

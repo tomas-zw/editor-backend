@@ -5,7 +5,7 @@ const noSql = require("../src/noSql.js");
 
 
 router.delete("/", async (req, res) => {
-    console.log("delete db")
+    console.log("delete db");
     const result = await noSql.deleteAllDocs();
 
     const data = {
