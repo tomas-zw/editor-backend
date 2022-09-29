@@ -12,7 +12,7 @@ async function deleteAllDocs() {
     let db;
 
     try {
-        db = await mongo.getDb();
+        db = await mongo.getDb("users");
         const response = await db.collection.deleteMany({});
 
         return response;
@@ -35,10 +35,8 @@ async function getAllDocuments(searchObject) {
     let db;
 
     try {
-        //db = await mongo.getDb("user");
         db = await mongo.getDb();
         const resultset = await db.collection.find(search).toArray();
-        //const resultset = await db.users.find(search).toArray();
 
         return resultset;
     } catch (e) {
@@ -101,8 +99,7 @@ async function updateDocument(docId, newValue) {
 }
 
 async function addDocument(docObject) {
-    //const newDoc = docObject || {
-    const newDocs = {
+    const newDoc = {
         owner: "Tomas@mail.com",
         title: "This is a very long title",
         body: "lite blandad text",
@@ -111,11 +108,6 @@ async function addDocument(docObject) {
             "another@mail.se",
             "third@test.com",
         ],
-    };
-
-    const newDoc = {
-        email: "any@mail.com",
-        password: "aHashedValue",
     };
     let db;
 

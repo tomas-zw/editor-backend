@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const index = require("./routes/index");
 const resetDb = require("./routes/resetDb");
-const auth = require(".routes/authUser");
+const authUser = require("./routes/authUser");
 
 const bodyParser = require("body-parser");
 
@@ -63,6 +63,7 @@ app.use(express.json());
 
 app.use("/", index);
 app.use("/resetdb", resetDb);
+app.use("/auth", authUser);
 
 app.get("/test/:msg", (req, res) => {
     const data = {

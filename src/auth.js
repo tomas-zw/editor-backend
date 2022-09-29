@@ -1,10 +1,11 @@
 const mongo = require("../db/database.js");
 
-module.exporst = {
-    "getUsers": getUsers
+module.exports = {
+    "getUsers": getUsers,
+    "addUser": addUser
 }
 
-async function getUsers() {
+async function getUsers(searchObject) {
     const search = searchObject || {};
     let db;
 
@@ -26,5 +27,31 @@ async function getUsers() {
     } finally {
         await db.client.close();
     }
+}
 
-};
+async function addUser(newUser) {
+    //const newUser = docObject || {
+    const user = newUser || {
+        email: "any@mail.com",
+        password: "aHashedValue",
+    };
+    let db;
+
+    try {
+        db = await mongo.getDb("users");
+        const result = await db.collection.insertOne(user);
+
+        return result;
+    } catch (e) {
+        return {
+            errors: {
+                status: 500,
+                source: "/",
+                title: "Database error",
+                detail: e.message
+            }
+        };
+    } finally {
+        await db.client.close();
+    }
+}
