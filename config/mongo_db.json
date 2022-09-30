@@ -1,5 +1,5 @@
 {
     "localUrl": "mongodb://localhost:27017/mumin",
-    "collection": "docs",
+    "collection": "alldocs",
     "users": "user"
 }
