@@ -6,6 +6,7 @@ const saltRounds = 10;
 
 module.exports = {
     "getUser": getUser,
+    "getUserEmails": getUserEmails,
     "addUser": addUser,
     "login": login,
     "checkToken": checkToken
@@ -82,9 +83,39 @@ async function validatePassword(user, hash, res) {
         });
     });
 }
+async function getUserEmails() {
+    const onlyEmail = {
+        projection: {
+            email: 1
+        }
+    };
+    let db;
+
+    try {
+        db = await mongo.getDb("users");
+        const resultset = await db.collection.find({}, onlyEmail).toArray();
+
+        return resultset;
+    } catch (e) {
+        return {
+            errors: {
+                status: 500,
+                source: "/",
+                title: "Database error",
+                detail: e.message
+            }
+        };
+    } finally {
+        await db.client.close();
+    }
+}
 
 async function getUser(userEmail) {
     let email = {email: userEmail};
+
+    if (!userEmail) {
+        email = {};
+    }
 
     if (userEmail === "all") {
         email = {};

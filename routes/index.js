@@ -10,7 +10,15 @@ router.get(
     "/",
     (req, res, next) => auth.checkToken(req, res, next),
     async (req, res) => {
-        const documents = await noSql.getAllDocuments();
+        let user = {};
+
+        if (req.query.find) {
+            user = {
+                users: req.query.find,
+            };
+        }
+        console.log(`query: ${req.query}`);
+        const documents = await noSql.getAllDocuments(user);
 
         const data = {
             data: {
@@ -43,7 +51,7 @@ router.put(
     (req, res, next) => auth.checkToken(req, res, next),
     async (req, res) => {
         const docId = { _id: ObjectId(req.body._id)};
-        const setValue = { $set: { body: req.body.body, title: req.body.title } };
+        const setValue = { $set: { body: req.body.body, title: req.body.title, users: req.body.users } };
         const docResult = await noSql.updateDocument(docId, setValue);
         const data = {
             data: {
@@ -58,6 +66,49 @@ router.put(
 
 router.delete("/", (req, res) => {
     res.status(204).send();
+});
+
+router.get(
+    "/users",
+    (req, res, next) => auth.checkToken(req, res, next),
+    async (req, res) => {
+        const users = await auth.getUserEmails();
+
+        const data = {
+            data: {
+                msg: "GET Route/ index",
+                users: users
+            }
+        };
+
+        res.status(200).json(data);
+    });
+
+/* for easier testing */
+router.get("/testd", async (req, res) => {
+    const documents = await noSql.getAllDocuments();
+
+    const data = {
+        data: {
+            msg: "GET Route/ index",
+            collection: documents
+        }
+    };
+
+    res.status(200).json(data);
+});
+
+router.get("/testu", async (req, res) => {
+    const users = await auth.getUser();
+
+    const data = {
+        data: {
+            msg: "GET Route/ testu",
+            collection: users
+        }
+    };
+
+    res.status(200).json(data);
 });
 
 module.exports = router;
