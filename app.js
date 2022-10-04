@@ -9,6 +9,12 @@ const authUser = require("./routes/authUser");
 
 const bodyParser = require("body-parser");
 
+const { graphqlHTTP } = require("express-graphql");
+const RootQueryType = require("./graphql/root.js");
+const {
+  GraphQLSchema
+} = require("graphql");
+
 const app = express();
 
 //----------------socket-------------------------
@@ -46,6 +52,20 @@ io.on('connection', function(socket) {
 //----------------socket-------------------------
 
 const port = process.env.PORT || 1337;
+
+//----------------graphql--------------
+
+const visual = true;
+const schema = new GraphQLSchema({
+    query: RootQueryType
+});
+
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: visual, // Visual är satt till true under utveckling
+}));
+
+//----------------graphql--------------
 
 app.use(cors());
 //app.options('*', cors());
