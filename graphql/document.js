@@ -1,10 +1,11 @@
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLInt,
     GraphQLNonNull,
     GraphQLList
 } = require('graphql');
+
+const UserType = require("./user.js");
 
 const DocType = new GraphQLObjectType({
     name: 'Document',
@@ -15,6 +16,6 @@ const DocType = new GraphQLObjectType({
         body: { type: GraphQLString },
         users: { type: new GraphQLList(GraphQLString)}
     })
-})
+});
 
 module.exports = DocType;

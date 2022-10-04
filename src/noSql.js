@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const mongo = require("../db/database.js");
 
 module.exports = {
@@ -54,7 +55,8 @@ async function getAllDocuments(searchObject) {
 }
 
 async function getOneDocument(searchObject) {
-    const search = searchObject || {};
+    //const search = searchObject || {};
+    const search = { _id: ObjectId(searchObject)};
     let db;
 
     try {

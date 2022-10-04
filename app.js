@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 const RootQueryType = require("./graphql/root.js");
 const {
-  GraphQLSchema
+    GraphQLSchema
 } = require("graphql");
 
 const app = express();
