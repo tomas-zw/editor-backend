@@ -6,8 +6,13 @@ const cors = require("cors");
 const index = require("./routes/index");
 const resetDb = require("./routes/resetDb");
 const authUser = require("./routes/authUser");
+const auth = require("./src/auth.js");
 
 const bodyParser = require("body-parser");
+
+const app = express();
+
+//----------------graphql--------------
 
 const { graphqlHTTP } = require("express-graphql");
 const RootQueryType = require("./graphql/root.js");
@@ -15,7 +20,13 @@ const {
     GraphQLSchema
 } = require("graphql");
 
-const app = express();
+const visual = true;
+const schema = new GraphQLSchema({
+    query: RootQueryType
+});
+
+//----------------graphql--------------
+
 
 //----------------socket-------------------------
 
@@ -67,19 +78,6 @@ if (process.env.NODE_ENV !== "test") {
     app.use(morgan("combined"));
 }
 
-//----------------graphql--------------
-
-const visual = true;
-const schema = new GraphQLSchema({
-    query: RootQueryType
-});
-
-app.use('/graphql', graphqlHTTP({
-    schema: schema,
-    graphiql: visual, // Visual är satt till true under utveckling
-}));
-
-//----------------graphql--------------
 
 app.use(express.json());
 
@@ -87,15 +85,19 @@ app.use("/", index);
 app.use("/resetdb", resetDb);
 app.use("/auth", authUser);
 
-app.get("/test/:msg", (req, res) => {
-    const data = {
-        data: {
-            msg: `GET/ hello json + ${req.params.msg}`
-        }
-    };
+//----------------graphql--------------
 
-    res.status(200).json(data);
-});
+// ask: this more or less disables 404 middleware. How to fix?
+//app.use((req, res, next) => auth.checkToken(req, res, next))
+
+app.use('/graphql',
+    (req, res, next) => auth.checkToken(req, res, next),
+    graphqlHTTP({
+        schema: schema,
+        graphiql: visual, // Visual är satt till true under utveckling
+    }));
+
+//----------------graphql--------------
 
 app.use((req, res, next) => {
     var err = new Error(`${req.path} Not Found`);
@@ -121,5 +123,17 @@ app.use((err, req, res, next) => {
 });
 
 const server = httpServer.listen(port, () => console.log(`listening on port ${port}!`));
+
+/*
+app.get("/test/:msg", (req, res) => {
+    const data = {
+        data: {
+            msg: `GET/ hello json + ${req.params.msg}`
+        }
+    };
+
+    res.status(200).json(data);
+});
+*/
 
 module.exports = server;
