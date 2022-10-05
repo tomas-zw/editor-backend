@@ -20,7 +20,7 @@ const {
     GraphQLSchema
 } = require("graphql");
 
-const visual = true;
+const visual = false;
 const schema = new GraphQLSchema({
     query: RootQueryType
 });
