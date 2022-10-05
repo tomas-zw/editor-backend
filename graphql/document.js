@@ -12,6 +12,7 @@ const DocType = new GraphQLObjectType({
     description: 'This represents a single document.',
     fields: () => ({
         _id: { type: new GraphQLNonNull(GraphQLString) },
+        owner: { type: GraphQLString },
         title: { type: GraphQLString },
         body: { type: GraphQLString },
         users: { type: new GraphQLList(GraphQLString)}

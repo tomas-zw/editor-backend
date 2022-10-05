@@ -53,6 +53,20 @@ io.on('connection', function(socket) {
 
 const port = process.env.PORT || 1337;
 
+
+app.use(cors());
+app.options('*', cors());
+app.disable('x-powered-by');
+
+app.use(bodyParser.json()); // for parsing application/json
+// for parsing application/x-www-form-urlencodedapp.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+if (process.env.NODE_ENV !== "test") {
+    app.use(morgan("combined"));
+}
+
 //----------------graphql--------------
 
 const visual = true;
@@ -66,18 +80,6 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 //----------------graphql--------------
-
-app.use(cors());
-//app.options('*', cors());
-
-app.use(bodyParser.json()); // for parsing application/json
-// for parsing application/x-www-form-urlencodedapp.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-if (process.env.NODE_ENV !== "test") {
-    app.use(morgan("combined"));
-}
 
 app.use(express.json());
 
