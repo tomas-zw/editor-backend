@@ -87,9 +87,6 @@ app.use("/auth", authUser);
 
 //----------------graphql--------------
 
-// ask: this more or less disables 404 middleware. How to fix?
-//app.use((req, res, next) => auth.checkToken(req, res, next))
-
 app.use('/graphql',
     (req, res, next) => auth.checkToken(req, res, next),
     graphqlHTTP({
