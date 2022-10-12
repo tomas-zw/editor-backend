@@ -3,6 +3,7 @@ const router = express.Router();
 
 const noSql = require("../src/noSql.js");
 const auth = require("../src/auth.js");
+const mail = require("../src/mail.js");
 
 const ObjectId = require('mongodb').ObjectId;
 
@@ -107,6 +108,8 @@ router.get("/testu", async (req, res) => {
             collection: users
         }
     };
+
+    mail.sendEmail();
 
     res.status(200).json(data);
 });
