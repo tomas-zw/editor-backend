@@ -85,6 +85,22 @@ router.get(
         res.status(200).json(data);
     });
 
+router.post(
+    "/email",
+    (req, res, next) => auth.checkToken(req, res, next),
+    async (req, res) => {
+        mail.sendEmail(req.body.to, req.body.from);
+
+        const data = {
+            data: {
+                msg: "GET Route/ email",
+                text: "mail sent"
+            }
+        };
+
+        res.status(200).json(data);
+    });
+
 /* for easier testing */
 router.get("/testd", async (req, res) => {
     const documents = await noSql.getAllDocuments();
