@@ -125,7 +125,7 @@ router.get("/testu", async (req, res) => {
         }
     };
 
-    mail.sendEmail();
+    // mail.sendEmail();
 
     res.status(200).json(data);
 });
